@@ -23,8 +23,10 @@
 #ifndef _BITS_BYTESWAP_H
 #define _BITS_BYTESWAP_H 1
 
-#include <features.h>
-#include <bits/types.h>
+//#include <features.h>
+//#include <bits/types.h>
+
+#include <sys/types.h>
 
 /* Swap bytes in 16 bit value.  */
 #define __bswap_constant_16(x) \
@@ -39,7 +41,7 @@
       (((x) & 0x0000ff00u) <<  8) | (((x) & 0x000000ffu) << 24))
 
 #ifdef __GNUC__
-# if __GNUC_PREREQ (4, 3)
+# if __has_builtin(__builtin_bswap32)
 static __inline unsigned int
 __bswap_32 (unsigned int __bsx)
 {
@@ -59,7 +61,7 @@ __bswap_32 (unsigned int __bsx)
 #endif
 
 /* Swap bytes in 64 bit value.  */
-#if __GNUC_PREREQ (2, 0)
+#if 1
 # define __bswap_constant_64(x) \
      (__extension__ ((((x) & 0xff00000000000000ull) >> 56)		      \
 		     | (((x) & 0x00ff000000000000ull) >> 40)		      \
@@ -70,16 +72,16 @@ __bswap_32 (unsigned int __bsx)
 		     | (((x) & 0x000000000000ff00ull) << 40)		      \
 		     | (((x) & 0x00000000000000ffull) << 56)))
 
-# if __GNUC_PREREQ (4, 3)
-static __inline __uint64_t
-__bswap_64 (__uint64_t __bsx)
+# if __has_builtin(__builtin_bswap64)
+static __inline uint64_t
+__bswap_64 (uint64_t __bsx)
 {
   return __builtin_bswap64 (__bsx);
 }
 # else
 #  define __bswap_64(x) \
      (__extension__							      \
-      ({ union { __extension__ __uint64_t __ll;				      \
+      ({ union { __extension__ uint64_t __ll;				      \
 		 unsigned int __l[2]; } __w, __r;			      \
 	 if (__builtin_constant_p (x))					      \
 	   __r.__ll = __bswap_constant_64 (x);				      \
@@ -102,8 +104,8 @@ __bswap_64 (__uint64_t __bsx)
       | (((x) & 0x000000000000ff00ull) << 40)				      \
       | (((x) & 0x00000000000000ffull) << 56))
 
-static __inline __uint64_t
-__bswap_64 (__uint64_t __bsx)
+static __inline uint64_t
+__bswap_64 (uint64_t __bsx)
 {
   return __bswap_constant_64 (__bsx);
 }
