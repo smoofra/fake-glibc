@@ -11,6 +11,7 @@ install:
 	install -m 0644 ./endian.h              $(DESTDIR)/include
 	install -m 0644 ./linux/types.h         $(DESTDIR)/include/linux
 	install -m 0644 ./linux/elf.h           $(DESTDIR)/include/linux
+	install -m 0644 ./linux/ioctl.h           $(DESTDIR)/include/linux
 	install -m 0644 ./asm/types.h           $(DESTDIR)/include/asm
 
 
@@ -23,4 +24,5 @@ uninstall:
 	rm -f $(DESTDIR)/include/endian.h
 	rm -f $(DESTDIR)/include/linux/types.h
 	rm -f $(DESTDIR)/include/linux/elf.h
+	rm -f $(DESTDIR)/include/linux/ioctl.h
 	rm -f $(DESTDIR)/include/asm/types.h
