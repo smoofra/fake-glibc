@@ -1,7 +1,7 @@
 #ifndef _LINUX_TYPES_H
 #define _LINUX_TYPES_H
 
-#include <stding.h>
+#include <stdint.h>
 #include <asm/types.h>
 
 typedef int8_t s8;
